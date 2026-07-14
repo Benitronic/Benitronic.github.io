@@ -42,7 +42,7 @@
 .projects-head h2{color:#fff}
 .projects-head p{color:#ced7dd}
 .project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:1280px}
-.project-card{min-height:430px;padding:38px;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.22);background:rgba(10,30,48,.60);backdrop-filter:blur(14px);box-shadow:0 18px 50px rgba(0,0,0,.2);transition:transform .25s ease,border-color .25s ease,background .25s ease}
+.project-card{min-height:430px;padding:38px;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.22);background:rgba(10,30,48,.40);backdrop-filter:blur(14px);box-shadow:0 18px 50px rgba(0,0,0,.2);transition:transform .25s ease,border-color .25s ease,background .25s ease}
 .project-card:hover {
   transform: translateY(-5px);
   border-color: rgba(242, 138, 86, 0.7);
