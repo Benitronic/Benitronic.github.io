@@ -1,1 +1,63 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Gerenciamento de publicações</title><link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="studio.css"></head><body><main class="studio-page"><header><a href="../">← Voltar ao portfólio</a><button id="signOut" hidden>Sair</button></header><section><p class="eyebrow">Área privada</p><h1>Gerenciamento de publicações</h1><div id="loginPanel" class="login-panel"><h2>Entrar</h2><p>Use uma das contas autorizadas para administrar as publicações.</p><form id="loginForm"><label>E-mail<input id="loginEmail" type="email" value="faculdadebc1@gmail.com" required></label><label>Senha<input id="loginPassword" type="password" required></label><button class="primary-button">Entrar</button><p class="form-status" id="loginStatus"></p></form></div><div id="manager" hidden><p>Cadastre, edite ou exclua publicações e gerencie os arquivos PDF disponibilizados no portfólio.</p><div class="publication-manager"><section><div class="manager-heading"><div><p class="eyebrow">Acervo</p><h2>Publicações cadastradas</h2></div><span id="count"></span></div><div class="manager-items" id="items"></div></section><section><div class="form-heading"><div><p class="eyebrow">Editor</p><h2 id="formTitle">Nova publicação</h2></div><button class="text-button" id="cancelEdit" hidden>Cancelar edição</button></div><form id="publicationForm" class="studio-form"><label>Título *<input name="title" required></label><label>Autores *<input name="authors" required></label><div class="form-row"><label>Evento ou periódico *<input name="venue" required></label><label>Ano *<input name="year" type="number" min="1900" max="2100" required></label></div><div class="form-row"><label>Tipo<select name="type"><option>Artigo</option><option>Conference paper</option><option>Artigo em congresso</option><option>Dissertação de mestrado</option><option>Outro</option></select></label><label>DOI ou link<input name="doi" type="url"></label></div><label>Resumo<textarea name="abstract" rows="6"></textarea></label><label>Arquivo PDF<input name="pdf" type="file" accept="application/pdf"><small>PDF de até 25 MB. Em uma edição, deixe vazio para manter o arquivo atual.</small></label><label class="checkbox-label" id="removePdfLabel" hidden><input name="removePdf" type="checkbox"> Remover o PDF atual</label><button class="primary-button" id="submitButton">Cadastrar publicação</button><p class="form-status" id="formStatus"></p></form></section></div></div></section></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="studio.js"></script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Gerenciamento de publicações</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="studio.css">
+  <link rel="stylesheet" href="studio-enhancements.css">
+</head>
+<body>
+<main class="studio-page">
+  <header><a href="../">← Voltar ao portfólio</a><button id="signOut" hidden>Sair</button></header>
+  <section>
+    <p class="eyebrow">Área privada</p>
+    <h1>Gerenciamento de publicações</h1>
+    <div id="loginPanel" class="login-panel">
+      <h2>Entrar</h2>
+      <p>Use uma das contas autorizadas para administrar as publicações.</p>
+      <form id="loginForm">
+        <label>E-mail<input id="loginEmail" type="email" value="faculdadebc1@gmail.com" required></label>
+        <label>Senha<input id="loginPassword" type="password" required></label>
+        <button class="primary-button">Entrar</button><p class="form-status" id="loginStatus"></p>
+      </form>
+    </div>
+    <div id="manager" hidden>
+      <p>Cadastre, edite ou exclua publicações, selecione os destaques e gerencie os arquivos PDF.</p>
+      <div class="publication-manager">
+        <section>
+          <div class="manager-heading"><div><p class="eyebrow">Acervo</p><h2>Publicações cadastradas</h2></div><span id="count"></span></div>
+          <div class="manager-items" id="items"></div>
+        </section>
+        <section>
+          <div class="form-heading"><div><p class="eyebrow">Editor</p><h2 id="formTitle">Nova publicação</h2></div><button class="text-button" id="cancelEdit" hidden>Cancelar edição</button></div>
+          <form id="publicationForm" class="studio-form">
+            <label>Título *<input name="title" required></label>
+            <label>Autores *<input name="authors" required></label>
+            <div class="form-row"><label>Evento ou periódico *<input name="venue" required></label><label>Ano *<input name="year" type="number" min="1900" max="2100" required></label></div>
+            <div class="form-row"><label>Tipo<select name="type"><option>Artigo</option><option>Artigo em congresso</option><option>Dissertação de mestrado</option><option>Outro</option></select></label><label>DOI ou link<input name="doi" type="url"></label></div>
+            <label>Resumo<textarea name="abstract" rows="6"></textarea></label>
+            <fieldset class="featured-editor">
+              <legend>Publicação em destaque</legend>
+              <label class="checkbox-label"><input name="featured" type="checkbox"> Exibir esta publicação entre os destaques</label>
+              <div class="form-row"><label>Ordem do destaque<input name="featured_order" type="number" min="1" placeholder="1"></label><span class="field-help">Use 1 para o primeiro destaque, 2 para o segundo e assim por diante.</span></div>
+              <label>Contribuição em português<textarea name="contribution_pt" rows="4" placeholder="Explique em uma frase clara a principal contribuição do trabalho."></textarea></label>
+              <label>Contribution in English<textarea name="contribution_en" rows="4" placeholder="Describe the main contribution in one clear sentence."></textarea></label>
+              <label>Link complementar<input name="complementary_url" type="url" placeholder="Site do projeto ou vídeo no YouTube"></label>
+              <div class="form-row"><label>Nome do link em português<input name="complementary_label_pt" placeholder="Vídeo de demonstração ↗"></label><label>Link label in English<input name="complementary_label_en" placeholder="Demonstration video ↗"></label></div>
+            </fieldset>
+            <label>Arquivo PDF<input name="pdf" type="file" accept="application/pdf"><small>PDF de até 25 MB. Em uma edição, deixe vazio para manter o arquivo atual.</small></label>
+            <label class="checkbox-label" id="removePdfLabel" hidden><input name="removePdf" type="checkbox"> Remover o PDF atual</label>
+            <button class="primary-button" id="submitButton">Cadastrar publicação</button><p class="form-status" id="formStatus"></p>
+          </form>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="studio.js"></script>
+</body>
+</html>
