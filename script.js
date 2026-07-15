@@ -186,7 +186,7 @@ function renderPublications(){
   const ui=uiCopy[lang];
   $("publicationCount").textContent=String(publications.length);
   const featured=publications.filter(p=>p.featured).sort((a,b)=>(a.featured_order??999)-(b.featured_order??999)||b.year-a.year);
-  const selected=featured.length?featured:publications.slice(0,Math.min(3,publications.length));
+  const selected=featured;
   $("featuredPubList").innerHTML=selected.length?selected.map(publication=>{
     const contribution=(lang==="pt"?publication.contribution_pt:publication.contribution_en)||(lang==="pt"?publication.contribution_en:publication.contribution_pt)||publication.abstract||"";
     return `<article class="featured-pub-card"><div class="featured-pub-meta"><time>${publication.year}</time><span>${escapeHtml(publicationType(publication.type))}</span></div><h4>${escapeHtml(publication.title)}</h4><p class="featured-pub-authors">${escapeHtml(publication.authors)}</p><small>${escapeHtml(publication.venue)}</small>${contribution?`<p class="featured-contribution">${escapeHtml(contribution)}</p>`:""}<div class="featured-pub-links">${publicationLinks(publication,true)}</div></article>`;
