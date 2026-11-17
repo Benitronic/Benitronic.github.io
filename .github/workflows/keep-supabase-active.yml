@@ -1,0 +1,53 @@
+name: Keep Supabase active
+
+on:
+  schedule:
+    # Diariamente às 09:17 no horário de Brasília (12:17 UTC).
+    - cron: "17 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: keep-supabase-active
+  cancel-in-progress: true
+
+jobs:
+  query-publications:
+    name: Query public publications
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Send a read-only request to Supabase
+        env:
+          SUPABASE_URL: https://vfyiczqntletivvxvpmo.supabase.co
+          SUPABASE_PUBLISHABLE_KEY: sb_publishable_radG_i41rNtT3pI_YhXUpg_qbvl5nJO
+        run: |
+          set -euo pipefail
+
+          response_file="${RUNNER_TEMP}/supabase-response.json"
+          status_code="$(
+            curl \
+              --silent \
+              --show-error \
+              --location \
+              --output "${response_file}" \
+              --write-out "%{http_code}" \
+              --get \
+              "${SUPABASE_URL}/rest/v1/publications" \
+              --data-urlencode "select=id" \
+              --data-urlencode "limit=1" \
+              --header "apikey: ${SUPABASE_PUBLISHABLE_KEY}" \
+              --header "Authorization: Bearer ${SUPABASE_PUBLISHABLE_KEY}" \
+              --header "Accept: application/json"
+          )"
+
+          if [[ "${status_code}" -lt 200 || "${status_code}" -ge 300 ]]; then
+            echo "Supabase request failed with HTTP ${status_code}."
+            cat "${response_file}"
+            exit 1
+          fi
+
+          echo "Supabase read request completed successfully (HTTP ${status_code})."
